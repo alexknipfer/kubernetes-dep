@@ -1,0 +1,48 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: inventory-service
+  name: inventory-service
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: inventory-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: inventory-service
+    spec:
+      containers:
+      - image: alexknipfer/inventory-service
+        imagePullPolicy: IfNotPresent
+        name: inventory-service
+        ports:
+        - containerPort: 8080
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: inventory-service
+  name: inventory-service
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: inventory-service
+  sessionAffinity: None
+  type: ClusterIP
