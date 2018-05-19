@@ -37,6 +37,15 @@ metadata:
     run: inventory-service
   name: inventory-service
   namespace: default
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  fws-invoices_mapping
+      prefix: /invoices/
+      rewrite: /api/invoices/
+      service: inventory-service
 spec:
   ports:
   - port: 80
