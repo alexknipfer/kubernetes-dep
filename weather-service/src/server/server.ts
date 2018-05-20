@@ -3,8 +3,10 @@ import * as bodyParser from 'body-parser'
 import * as cors from 'cors'
 import * as helmet from 'helmet'
 import * as dotenv from 'dotenv'
-import * as routes from '../routes/routes'
-import { Server } from '../models/Server'
+import { Server } from '../interfaces/Server'
+import container from '../inversify.config'
+import { RegistrableController } from '../interfaces/RegistrableController'
+import { TYPES } from '../models/InversifyTypes'
 
 export class ExpressServer implements Server {
   protected server: express.Application
@@ -18,8 +20,10 @@ export class ExpressServer implements Server {
     this.server.use(bodyParser.json())
     this.server.use(cors())
 
-    let __routes = new routes.Routes()
-    __routes.paths(this.server)
+    const controllers: RegistrableController[] = container.getAll<
+      RegistrableController
+    >(TYPES.Controller)
+    controllers.forEach(controller => controller.register(this.server))
   }
 
   public startServer() {

@@ -1,5 +1,4 @@
 import * as express from 'express'
-import { WeatherByZipCode } from './WeatherByZipCode'
 
 export class Routes {
   defaultRoute(req: express.Request, res: express.Response) {
@@ -7,8 +6,6 @@ export class Routes {
   }
 
   paths(app: express.Application) {
-    new WeatherByZipCode(app)
-
     app.get('/', (req: express.Request, res: express.Response) => {
       this.defaultRoute(req, res)
     })
