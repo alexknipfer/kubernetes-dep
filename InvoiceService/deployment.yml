@@ -3,14 +3,14 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    run: inventory-service
-  name: inventory-service
+    run: weather-service
+  name: weather-service
   namespace: default
 spec:
   replicas: 3
   selector:
     matchLabels:
-      run: inventory-service
+      run: weather-service
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -19,14 +19,17 @@ spec:
   template:
     metadata:
       labels:
-        run: inventory-service
+        run: weather-service
     spec:
       containers:
-      - image: alexknipfer/inventory-service
+      - image: alexknipfer/weather-service
         imagePullPolicy: IfNotPresent
-        name: inventory-service
+        name: weather-service
         ports:
         - containerPort: 8080
+        env:
+        - name: OPEN_WEATHER_API_KEY
+          value: "4515a42ada398354247cd924a24db378"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
 ---
@@ -34,24 +37,24 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: inventory-service
-  name: inventory-service
+    run: weather-service
+  name: weather-service
   namespace: default
   annotations:
     getambassador.io/config: |
       ---
       apiVersion: ambassador/v0
       kind:  Mapping
-      name:  fws-invoices_mapping
-      prefix: /invoices/
-      rewrite: /api/invoices/
-      service: inventory-service
+      name:  fws-weather_mapping
+      prefix: /getWeatherByZip/
+      rewrite: /api/getWeatherByZip/
+      service: weather-service
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 8080
   selector:
-    run: inventory-service
+    run: weather-service
   sessionAffinity: None
   type: ClusterIP
