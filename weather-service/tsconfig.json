@@ -6,6 +6,7 @@
     "moduleResolution": "node",
     "types": ["reflect-metadata"],
     "sourceMap": true,
+    "rootDir": "src",
     "outDir": "dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
