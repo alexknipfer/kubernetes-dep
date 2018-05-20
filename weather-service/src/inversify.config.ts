@@ -3,17 +3,20 @@ import { ExpressServer } from './server/server'
 import 'reflect-metadata'
 import { OpenWeatherClientImpl } from './clients/OpenWeatherClientImpl'
 import { RegistrableController } from './interfaces/RegistrableController'
-import { TYPES } from './models/InversifyTypes'
+import { InversifyTypes } from './models/InversifyTypes'
 import { WeatherByZipCodeController } from './routes/WeatherByZipCodeController'
 
 const container = new Container()
 
 // Services
-bindClass(TYPES.Server, ExpressServer)
-bindClass(TYPES.OpenWeatherClient, OpenWeatherClientImpl)
+bindClass(InversifyTypes.Server, ExpressServer)
+bindClass(InversifyTypes.OpenWeatherClient, OpenWeatherClientImpl)
 
 // Registrable controllers
-bindClass<RegistrableController>(TYPES.Controller, WeatherByZipCodeController)
+bindClass<RegistrableController>(
+  InversifyTypes.Controller,
+  WeatherByZipCodeController
+)
 
 function bindClass<InterfaceType>(type: symbol, classToBind: any) {
   decorate(injectable(), classToBind)

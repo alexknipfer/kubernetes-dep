@@ -1,7 +1,5 @@
-export const TYPES = {
+export const InversifyTypes = {
   Controller: Symbol('Controller'),
   Server: Symbol('Server'),
   OpenWeatherClient: Symbol('OpenWeatherClient')
 }
-
-export default TYPES

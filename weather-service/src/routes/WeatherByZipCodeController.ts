@@ -2,13 +2,14 @@ import * as express from 'express'
 import { inject } from 'inversify'
 import { OpenWeatherClient } from '../interfaces/OpenWeatherClient'
 import { RegistrableController } from '../interfaces/RegistrableController'
-import { TYPES } from '../models/InversifyTypes'
+import { InversifyTypes } from '../models/InversifyTypes'
 
 export class WeatherByZipCodeController implements RegistrableController {
   private routePath: string = '/api/getWeatherByZip/:zipCode'
 
   constructor(
-    @inject(TYPES.OpenWeatherClient) private weatherClient: OpenWeatherClient
+    @inject(InversifyTypes.OpenWeatherClient)
+    private weatherClient: OpenWeatherClient
   ) {}
 
   public register(app: express.Application) {

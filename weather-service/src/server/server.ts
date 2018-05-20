@@ -6,7 +6,7 @@ import * as dotenv from 'dotenv'
 import { Server } from '../interfaces/Server'
 import container from '../inversify.config'
 import { RegistrableController } from '../interfaces/RegistrableController'
-import { TYPES } from '../models/InversifyTypes'
+import { InversifyTypes } from '../models/InversifyTypes'
 
 export class ExpressServer implements Server {
   protected server: express.Application
@@ -22,7 +22,7 @@ export class ExpressServer implements Server {
 
     const controllers: RegistrableController[] = container.getAll<
       RegistrableController
-    >(TYPES.Controller)
+    >(InversifyTypes.Controller)
     controllers.forEach(controller => controller.register(this.server))
   }
 
