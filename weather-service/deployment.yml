@@ -27,9 +27,6 @@ spec:
         name: weather-service
         ports:
         - containerPort: 8080
-        env:
-        - name: OPEN_WEATHER_API_KEY
-          value: "4515a42ada398354247cd924a24db378"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
 ---
