@@ -4,7 +4,7 @@ import { OpenWeatherClient } from '../interfaces/OpenWeatherClient'
 import { RegistrableController } from '../interfaces/RegistrableController'
 import { InversifyTypes } from '../models/InversifyTypes'
 
-export class WeatherByZipCodeController implements RegistrableController {
+export class WeatherByZipRouteController implements RegistrableController {
   private routePath: string = '/api/getWeatherByZip/:zipCode'
 
   constructor(
