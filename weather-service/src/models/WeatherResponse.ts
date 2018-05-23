@@ -2,13 +2,13 @@ export interface WeatherResponse {
   id: string
   dt: number
   name: string
-  cod: 200
+  cod: number
   wind: Wind
-  main: Main
+  main?: Main
   base?: string
-  weather: Array<Weather>
-  sys: Sys
-  coord: Coordinate
+  weather?: Array<Weather>
+  sys?: Sys
+  coord?: Coordinate
 }
 
 export interface Wind {
