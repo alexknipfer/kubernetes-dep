@@ -4,9 +4,9 @@ import * as cors from 'cors'
 import * as helmet from 'helmet'
 import * as dotenv from 'dotenv'
 import { Server } from '../interfaces/Server'
-import container from '../inversify.config'
 import { RegistrableController } from '../interfaces/RegistrableController'
 import { InversifyTypes } from '../models/InversifyTypes'
+import { InversifyConfiguration } from '../inversify.config'
 
 export class ExpressServer implements Server {
   protected server: express.Application
@@ -20,7 +20,7 @@ export class ExpressServer implements Server {
     this.server.use(bodyParser.json())
     this.server.use(cors())
 
-    const controllers: RegistrableController[] = container.getAll<
+    const controllers: RegistrableController[] = InversifyConfiguration.container.getAll<
       RegistrableController
     >(InversifyTypes.Controller)
     controllers.forEach(controller => controller.register(this.server))
