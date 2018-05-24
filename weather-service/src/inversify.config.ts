@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import { Container, injectable, decorate } from 'inversify'
+
 export class InversifyConfiguration {
   public static container = new Container()
 
